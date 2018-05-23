@@ -10,7 +10,6 @@
 
 
 
-
     </style>
     <style name="Fuxk_28px_TextView" parent="@android:style/Widget.TextView">
         <item name="android:textSize">@dimen/dd_dimen_28px</item>

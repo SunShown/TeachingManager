@@ -9,6 +9,8 @@ public class API {
     public static final String IP_LOGIN = IP + "";
     public static final String IP_REGISTER = IP + "User?method=register";
     public static final String IP_MSG_LIST = IP +"News?method=getNewsList";
+    public static final String IP_COMMENT_LIST = IP +"News?method=getNewsList";
+    public static final String IP_COMMIT_COMMENT = IP +"";/*提交评论*/
     //登录接口
     public interface LOGIN{
         String username ="username";
@@ -26,5 +28,21 @@ public class API {
      */
     public interface MSG_LIST{
 //        String
+    }
+
+    /**
+     * 评论列表
+     */
+    public interface COMMNETS{
+        String msgId = "msgId";
+    }
+
+    /**
+     * 提交评论
+     */
+    public interface COMMIT_COMMENT{
+        String msgId = "msgId";
+        String content = "content";
+        String userId = "userId";
     }
 }
