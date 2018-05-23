@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">教学系统</string>
+
+    <string name="setting">设置</string>
+
+    <!--bottom text-->
+    <string name="btm_course">课程表</string>
+    <string name="btm_test">练习与测试</string>
+    <string name="btm_chat">互动</string>
+
+    <!--login-->
+    <!---->
+    <string name="login_username">用户名</string>
+    <string name="login_password">密码</string>
+    <string name="login_student">学生</string>
+    <string name="login_teacher">老师</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="loading_summary">正在努力的加载中...</string>
+    <string name="login_error">用户名或者密码错误</string>
+    <string name="login_success">登陆成功</string>
+    <string name="request_error">请求失败</string>
+
+    <!--注册-->
+    <string name="hint_username">请输入用户名</string>
+    <string name="hint_password">请输入密码</string>
+    <string name="repeat_password">确认密码</string>
+    <string name="hint_repassword">请再次输入密码</string>
+    <string name="status">身份</string>
+    <string name="student">学生</string>
+    <string name="teacher">老师</string>
+    <string name="register_txt">注册</string>
+
+    <!--课表-->
+    <string name="empty"></string>
+    <string name="mon">周一</string>
+    <string name="tue">周二</string>
+    <string name="wen">周三</string>
+    <string name="thu">周四</string>
+    <string name="fri">周五</string>
+    <string name="sta">周六</string>
+    <string name="sun">周日</string>
+    <string name="loading_tip">加载中...</string>
+</resources>

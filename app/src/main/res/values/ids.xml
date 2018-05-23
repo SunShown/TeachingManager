@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tb_iv_left" type="id"/>
+    <item name="tb_iv_right" type="id"/>
+    <item name="tb_iv_right1" type="id"/>
+    <item name="tb_tv_left" type="id"/>
+    <item name="tb_tv_right" type="id"/>
+    <item name="tb_tv_title" type="id"/>
+</resources>

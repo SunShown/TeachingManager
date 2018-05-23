@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundProgressBar">
+        <attr name="roundColor" format="color" />
+        <attr name="roundProgressColor" format="color" />
+        <attr name="roundWidth" format="dimension"></attr>
+        <attr name="BartextColor" format="color" />
+        <attr name="BartextSize" format="dimension" />
+        <attr name="max" format="integer"></attr>
+        <attr name="textIsDisplayable" format="boolean"></attr>
+        <attr name="style">
+            <enum name="STROKE" value="0"></enum>
+            <enum name="FILL" value="1"></enum>
+        </attr>
+    </declare-styleable>
+
+    <style name="MyDialogStyle_center">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <declare-styleable name="TitleBar">
+        <attr name="leftSrc" format="reference" />
+        <attr name="rightSrc" format="reference" />
+        <attr name="rightSrc1" format="reference" />
+        <attr name="middleLayout" format="reference" />
+        <attr name="rightLayout" format="reference" />
+        <attr name="title" format="string" />
+        <attr name="leftText" format="string" />
+        <attr name="rightText" format="string" />
+    </declare-styleable>
+</resources>

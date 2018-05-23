@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="drawable" name="login_edit_normal_bg">#88f1f1f1</item>
+</resources>
