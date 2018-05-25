@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.EditWorkActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.yah.manager.teachingmanage.widgets.TitleBar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_bar_height"
+            app:leftSrc="@drawable/ic_back"
+            app:title="编辑作业"
+            app:rightText="提交"
+            />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_title"
+                android:hint="请输入标题"
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
+            <LinearLayout
+
+                android:orientation="vertical"
+                android:id="@+id/ll_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_add_item"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:textSize="18dp"
+                android:text="+点击输入题目"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

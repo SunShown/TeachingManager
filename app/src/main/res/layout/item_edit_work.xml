@@ -1,0 +1,54 @@
+<LinearLayout android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    android:id="@+id/ll_work_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/tv_tilte"
+        android:layout_gravity="center"
+        android:text="第一题"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:hint="请输入问题"
+        android:layout_width="match_parent"
+        android:layout_height="70dp" />
+    <TextView
+        android:text="请输入选项"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:hint="请输入第一选项"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <EditText
+        android:hint="请输入第二选项"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <EditText
+        android:hint="请输入第三选项"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <EditText
+        android:hint="请输入第四选项"
+        android:id="@+id/et_qeustion_4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <TextView
+        android:text="请输入正确选项"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:inputType="numberDecimal"
+
+        android:layout_width="40dp"
+        android:layout_height= "wrap_content"/>
+    <TextView
+        android:id="@+id/tv_delete"
+        android:textSize="18dp"
+        android:layout_gravity="center"
+        android:text="点击删除该题"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

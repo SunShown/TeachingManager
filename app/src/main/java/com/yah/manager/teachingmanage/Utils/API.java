@@ -11,6 +11,11 @@ public class API {
     public static final String IP_MSG_LIST = IP +"News?method=getNewsList";
     public static final String IP_COMMENT_LIST = IP +"News?method=getNewsList";
     public static final String IP_COMMIT_COMMENT = IP +"";/*提交评论*/
+    public static final String IP_GET_WORK_LIST = IP +"Work?methond=getWorkList";//获取所有题目列表
+    public static final String IP_GET_WORK_DETAIL = IP +"Work?methond=getWorkDetail";//获取某个题目的内容
+    public static final String IP_COMMIT_WORK = IP +"";//提交作业
+    public static final String IP_COMMIT_POSTS = IP+"";//发布帖子
+
     //登录接口
     public interface LOGIN{
         String username ="username";
@@ -42,6 +47,33 @@ public class API {
      */
     public interface COMMIT_COMMENT{
         String msgId = "msgId";
+        String content = "content";
+        String userId = "userId";
+    }
+
+    /**
+     * 获取所有作业列表
+     */
+    public interface GET_TEST_LIST{
+        String userId = "userId";
+    }
+
+    public interface GET_WORK_DETAIL{
+        String workId = "workId";
+        String userId = "userId";
+    }
+
+    public interface COMMIT_WORK{
+        String workId = "workId";
+        String userId= "userId";
+        String errorCount = "errorCount";
+    }
+
+    /**
+     * 发表说说
+     */
+    public interface SEND_CIRCLE{
+        String title = "title";
         String content = "content";
         String userId = "userId";
     }

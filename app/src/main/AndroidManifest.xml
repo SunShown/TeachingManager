@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -21,11 +22,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.LoginActivity"></activity>
-        <activity android:name=".Activity.RegisterActivity">
-        </activity>
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.CourseDetailInfoActivity" />
-        <activity android:name=".Activity.MsgDetailActivity"></activity>
+        <activity android:name=".Activity.MsgDetailActivity" />
+        <activity android:name=".Activity.WorkDetailActivity" />
+        <activity android:name=".Activity.TradeCircleActivity" />
+        <activity android:name=".Activity.EditWorkActivity"></activity>
     </application>
 
 </manifest>

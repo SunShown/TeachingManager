@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:minHeight="100dp"
+    android:paddingBottom="8dp"
+    >
+    <android.support.v7.widget.CardView
+        android:id="@+id/ll_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:clickable="true"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="3dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:textColor="@color/chat_gray"
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="200dp"
+            android:singleLine="true"
+            android:lines="2"
+            android:text="这是标题"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:textColor="@color/gray"
+            android:id="@+id/tv_teacher_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:text="发布人："
+            android:textSize="16dp" />
+
+        <TextView
+            android:textColor="@color/gray"
+            android:id="@+id/tv_teacher_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:layout_toEndOf="@+id/tv_teacher_tip"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxWidth="200dp"
+            android:text="这是内容这是内容这是内容这是内容这是内容这是"
+            android:textSize="16dp" />
+
+        <TextView
+            android:textColor="@color/gray"
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="2018-9-10"
+            android:textSize="16dp" />
+    </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

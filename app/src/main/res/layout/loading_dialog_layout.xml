@@ -21,7 +21,7 @@
             android:background="@drawable/loading_animation"
             android:visibility="visible" />
 
-        <com.lilei.fitness.dialog.RoundProgressBar
+        <com.yah.manager.teachingmanage.Dialog.RoundProgressBar
             android:id="@+id/roundProgressBar"
             android:layout_width="40dip"
             android:layout_height="40dip"

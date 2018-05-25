@@ -1,10 +1,12 @@
 package com.yah.manager.teachingmanage.Fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.yah.manager.teachingmanage.Activity.TradeCircleActivity;
 import com.yah.manager.teachingmanage.Adapter.MsgListAdapter;
 import com.yah.manager.teachingmanage.Bean.MsgList;
 import com.yah.manager.teachingmanage.R;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.Call;
 
@@ -45,17 +49,24 @@ public class ChatFragment extends Fragment {
     MyHander hander;
     MsgListAdapter adapter;
     ArrayList<MsgList> msgList = new ArrayList<>();
+    @BindView(R.id.fab_prac)
+    FloatingActionButton fabPrac;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, null);
         unbinder = ButterKnife.bind(this, view);
         initView();
+        if (srfRefresh != null) {
+            srfRefresh.setRefreshing(true);
+        }
+        refresh();
         return view;
     }
 
 
-    public void initView(){
+    public void initView() {
         srfRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -63,9 +74,10 @@ public class ChatFragment extends Fragment {
             }
         });
         hander = new MyHander(this);
-        adapter = new MsgListAdapter(getActivity(),msgList);
+        adapter = new MsgListAdapter(getActivity(), msgList);
         listView.setAdapter(adapter);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -75,16 +87,12 @@ public class ChatFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //刷新列表
-        if (srfRefresh != null){
-            srfRefresh.setRefreshing(true);
-        }
     }
 
     /**
      * 刷新列表
      */
-    public void refresh(){
+    public void refresh() {
         OkHttpUtils.post()
                 .url(API.IP_MSG_LIST)
                 .id(1)
@@ -92,7 +100,7 @@ public class ChatFragment extends Fragment {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        if (srfRefresh != null){
+                        if (srfRefresh != null) {
                             //取消刷新
                             hander.sendEmptyMessage(ASK_FAIFURE);
 
@@ -101,9 +109,10 @@ public class ChatFragment extends Fragment {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        if (srfRefresh != null){
+                        if (srfRefresh != null) {
                             Gson gson = new Gson();
-                            ArrayList<MsgList> msgLists = gson.fromJson(response,new TypeToken<ArrayList<MsgList>>(){}.getType());
+                            ArrayList<MsgList> msgLists = gson.fromJson(response, new TypeToken<ArrayList<MsgList>>() {
+                            }.getType());
                             Message message = new Message();
                             message.what = ASK_SUCCESS;
                             message.obj = msgLists;
@@ -113,19 +122,26 @@ public class ChatFragment extends Fragment {
                 });
     }
 
-    public void refreshSuccess(ArrayList<MsgList> msgLists){
+    public void refreshSuccess(ArrayList<MsgList> msgLists) {
 
         srfRefresh.setRefreshing(false);
-        if (msgLists == null || msgLists.size() == 0){
-            Utils.toast(getActivity(),"暂无新数据");
+        if (msgLists == null || msgLists.size() == 0) {
+            Utils.toast(getActivity(), "暂无新数据");
             return;
         }
         msgList.clear();//清除所有列表
         msgLists.addAll(msgLists);//重新设置新数据
         adapter.notifyDataSetChanged();//更新UI
     }
-    class MyHander extends Handler{
-        WeakReference<ChatFragment> chatFragments ;
+
+    @OnClick(R.id.fab_prac)
+    public void onViewClicked() {
+        Intent intent = new Intent(getActivity(), TradeCircleActivity.class);
+        startActivity(intent);
+    }
+
+    class MyHander extends Handler {
+        WeakReference<ChatFragment> chatFragments;
 
         public MyHander(ChatFragment chatFragments) {
             this.chatFragments = new WeakReference<>(chatFragments);
@@ -135,14 +151,15 @@ public class ChatFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             ChatFragment chatFragment = chatFragments.get();
-            switch (msg.what){
+            switch (msg.what) {
                 case ASK_FAIFURE:
                     //请求失败
                     chatFragment.srfRefresh.setRefreshing(false);
-                    Utils.toast(chatFragment.getActivity(),"请求失败，请重试");
+                    Utils.toast(chatFragment.getActivity(), "请求失败，请重试");
                     break;
                 case ASK_SUCCESS:
                     //请求成功
+                    chatFragment.srfRefresh.setRefreshing(false);
                     ArrayList<MsgList> msgLists = (ArrayList<MsgList>) msg.obj;
                     chatFragment.refreshSuccess(msgLists);
                     break;

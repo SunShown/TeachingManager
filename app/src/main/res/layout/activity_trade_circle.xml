@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.TradeCircleActivity">
+    <com.yah.manager.teachingmanage.widgets.TitleBar
+        android:id="@+id/titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_bar_height"
+        app:leftSrc="@drawable/ic_back"
+        app:title="发表说说"
+        app:rightText="提交"
+        />
+    <TextView
+        android:id="@+id/tv_title"
+        android:textStyle="bold"
+        android:textColor="#252525"
+        android:layout_below="@id/titlebar"
+        android:text="标题"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/et_title"
+        android:layout_marginTop="6dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:hint="请输入标题"
+        android:textSize="16dp"
+        android:background="#eae7e7"
+        android:layout_below="@id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="70dp" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_title"
+        android:text="内容1111"
+        android:textColor="#252525"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:hint="请输入内容"
+        android:layout_below="@id/tv_content"
+        android:background="#eae7e7"
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="230dp" />
+</RelativeLayout>

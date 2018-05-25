@@ -9,8 +9,8 @@
         <item name="windowNoTitle">true</item>
 
 
-
     </style>
+
     <style name="Fuxk_28px_TextView" parent="@android:style/Widget.TextView">
         <item name="android:textSize">@dimen/dd_dimen_28px</item>
     </style>
@@ -38,7 +38,7 @@
         <item name="android:layout_height">2dp</item>
     </style>
 
-    <style name="TitleBarText" >
+    <style name="TitleBarText">
         <item name="android:textColor">#ffffffff</item>
         <item name="android:shadowDx">1.0</item>
         <item name="android:shadowDy">0.0</item>
@@ -50,4 +50,13 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">#616161</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -41,4 +41,5 @@
     <string name="sta">周六</string>
     <string name="sun">周日</string>
     <string name="loading_tip">加载中...</string>
+    <string name="title_activity_work_detail">WorkDetailActivity</string>
 </resources>

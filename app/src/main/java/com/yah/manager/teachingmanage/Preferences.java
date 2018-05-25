@@ -44,6 +44,22 @@ public class Preferences{
        }catch (Exception e){
 
        }
+       if (user == null){
+           user = new User();
+       }
        return user;
+    }
+
+    /**
+     * 判断是否是老师
+     * @return
+     */
+    public boolean isTeacher(){
+        return sharedPreferences.getBoolean("isTeacher",true);
+    }
+
+    public void setTeacher(boolean isTeacher){
+        editor.putBoolean("isTeacher",isTeacher);
+        editor.commit();
     }
 }

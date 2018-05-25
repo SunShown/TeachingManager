@@ -9,38 +9,48 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_gravity="center"
+            android:textColor="@color/colorAccent"
             android:id="@+id/tv_que1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
             android:padding="8dp" />
-        <CheckBox
-            android:id="@+id/cb_choice1"
+        <RadioGroup
+            android:id="@+id/rg_choice"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/cb"
-            android:padding="8dp"
-            android:textColor="@color/colorPrimary" />
-        <CheckBox
-            android:id="@+id/cb_choice2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/cb"
-            android:padding="8dp"
-            android:textColor="@color/colorPrimary" />
-        <CheckBox
-            android:id="@+id/cb_choice3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/cb"
-            android:padding="8dp"
-            android:textColor="@color/colorPrimary" />
-        <CheckBox
-            android:id="@+id/cb_choice4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/cb"
-            android:padding="8dp"
-            android:textColor="@color/colorPrimary" />
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/cb_choice1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/cb"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimary"
+
+                />
+            <RadioButton
+                android:id="@+id/cb_choice2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/cb"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimary" />
+            <RadioButton
+                android:id="@+id/cb_choice3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/cb"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimary" />
+            <RadioButton
+                android:id="@+id/cb_choice4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/cb"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimary" />
+        </RadioGroup>
         <TextView
             android:id="@+id/tv_you"
             android:layout_width="match_parent"
@@ -48,17 +58,27 @@
             android:padding="8dp"
             android:textColor="@color/colorAccent" />
         <TextView
+            android:textColor="@color/text_normal"
+            android:text="点击查看正确答案"
+            android:textSize="16dp"
+            android:id="@+id/tv_look_right_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:visibility="gone"
             android:id="@+id/tv_answer1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:textColor="@color/colorAccent" />
-
-        <TextView
-            android:id="@+id/tv_detail1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textColor="@color/gray" />
+        <Button
+            android:layout_marginTop="44dp"
+            android:id="@+id/btn_commit"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:text="提交作业"
+            android:background="@drawable/login_btn_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

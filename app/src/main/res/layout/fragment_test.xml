@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-    <LinearLayout
-        android:background="@color/colorTitlebar"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srf_refresh"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_bar_height"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <ImageView
-            android:id="@+id/img_pre"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/pre"/>
+        android:layout_height="match_parent">
+        <com.yah.manager.teachingmanage.widgets.MyListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:dividerHeight="16dp"
+            android:listSelector="#00000000"
+            android:scrollbarStyle="outsideOverlay"
+            android:transcriptMode="normal"
+            android:clipToPadding="false"
+            >
 
-        <Chronometer
-            android:id="@+id/mytime"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/white" />
-        <ImageView
-            android:id="@+id/img_next"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/next"/>
-    </LinearLayout>
-    <include layout="@layout/que_content"/>
-</LinearLayout>
+        </com.yah.manager.teachingmanage.widgets.MyListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="bottom|right"
+        android:id="@+id/fab_prac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/exam"/>
+</FrameLayout>
