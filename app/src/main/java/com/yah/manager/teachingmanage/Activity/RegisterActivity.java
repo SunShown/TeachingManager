@@ -1,5 +1,6 @@
 package com.yah.manager.teachingmanage.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -90,7 +91,9 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void onResponse(String response, int id) {
             if (id == 1) {
-                Utils.toast(RegisterActivity.this, response);
+                Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
             } else {
                 Utils.toast(RegisterActivity.this, "请求失败");
             }

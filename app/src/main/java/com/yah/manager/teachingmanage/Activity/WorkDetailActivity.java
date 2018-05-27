@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +11,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterViewFlipper;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.Chronometer;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.yah.manager.teachingmanage.Bean.Comment;
+import com.google.gson.reflect.TypeToken;
 import com.yah.manager.teachingmanage.Bean.WorkDetail;
 import com.yah.manager.teachingmanage.Bean.WorkItem;
 import com.yah.manager.teachingmanage.Preferences;
@@ -131,13 +126,20 @@ public class WorkDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        if (!isFinishing()) {
-                            Gson gson = new Gson();
-                            WorkDetail workDetail = gson.fromJson(response,WorkDetail.class);
-                            Message message = new Message();
-                            message.what = ASK_SUCCESS;
-                            message.obj = workDetail;
-                            hander.sendMessage(message);
+                        try{
+                            if (!isFinishing()) {
+                                Gson gson = new Gson();
+                                List<WorkItem> workItems = gson.fromJson(response, new TypeToken<ArrayList<WorkItem>>() {
+                                }.getType());
+                                WorkDetail workDetail = new WorkDetail();
+                                workDetail.workList = workItems;
+                                Message message = new Message();
+                                message.what = ASK_SUCCESS;
+                                message.obj = workDetail;
+                                hander.sendMessage(message);
+                            }
+                        }catch (Exception e){
+                            hander.sendEmptyMessage(ASK_FAIFURE);
                         }
                     }
                 });
@@ -274,10 +276,7 @@ public class WorkDetailActivity extends AppCompatActivity {
             }else {
                 holder.commit.setVisibility(View.GONE);
             }
-            holder.tv_que1.setText(workItems.get(position).workTitle);
-            if (workItems.get(position).options == null || workItems.get(position).options.size() < 4){
-                return view;
-            }
+            holder.tv_que1.setText(workItems.get(position).title);
             if (workItems.get(position).isChoice){
                 switch (workItems.get(position).choicePostion){
                     case 1:
@@ -296,10 +295,10 @@ public class WorkDetailActivity extends AppCompatActivity {
 
             }
             //设置作业
-            holder.cb_choice1.setText("1:"+workItems.get(position).options.get(0));
-            holder.cb_choice2.setText("2:"+workItems.get(position).options.get(1));
-            holder.cb_choice3.setText("3:"+workItems.get(position).options.get(2));
-            holder.cb_choice4.setText("4:"+workItems.get(position).options.get(3));
+            holder.cb_choice1.setText("1:"+workItems.get(position).qOne);
+            holder.cb_choice2.setText("2:"+workItems.get(position).qTwo);
+            holder.cb_choice3.setText("3:"+workItems.get(position).qThree);
+            holder.cb_choice4.setText("4:"+workItems.get(position).qFour);
             holder.commit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -329,7 +328,7 @@ public class WorkDetailActivity extends AppCompatActivity {
                             choicePosition = 4;
                             break;
                     }
-                    if (choicePosition == workItems.get(position).rightPosition){
+                    if (choicePosition == workItems.get(position).answer){
                         workItems.get(position).isRight = true;
                     }else {
                         workItems.get(position).isRight = false;
@@ -344,10 +343,10 @@ public class WorkDetailActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     finalHolder1.tv_answer1.setVisibility(View.VISIBLE);
                     if (workItems.get(position).isRight){
-                        finalHolder1.tv_answer1.setText("恭喜您答对啦！正确选项为"+workItems.get(position).rightPosition);
+                        finalHolder1.tv_answer1.setText("恭喜您答对啦！正确选项为"+workItems.get(position).answer);
                         finalHolder1.tv_answer1.setTextColor(Color.RED);
                     }else {
-                        finalHolder1.tv_answer1.setText("很遗憾！你未能答对，正确选项为"+workItems.get(position).rightPosition);
+                        finalHolder1.tv_answer1.setText("很遗憾！你未能答对，正确选项为"+workItems.get(position).answer);
                     }
                 }
             });

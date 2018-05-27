@@ -52,6 +52,8 @@ public class MsgDetailActivity extends AppCompatActivity {
     Button btnCommit;
 
     private String msgId;
+    private String title;
+    private String content;
     private MyHander hander;
     private CommentAdapter commentAdapter;
     private ArrayList<Comment> comments = new ArrayList<>();
@@ -66,6 +68,10 @@ public class MsgDetailActivity extends AppCompatActivity {
             finish();
         }
         msgId = getIntent().getStringExtra("msgId");
+        title = getIntent().getStringExtra("title");
+        content = getIntent().getStringExtra("content");
+        tvTitle.setText(title);
+        tvContent.setText(content);
         hander = new MyHander(this);
         commentAdapter = new CommentAdapter(this, comments);
         listView.setAdapter(commentAdapter);
@@ -105,14 +111,18 @@ public class MsgDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        if (srfRefresh != null) {
-                            Gson gson = new Gson();
-                            ArrayList<Comment> msgLists = gson.fromJson(response, new TypeToken<ArrayList<Comment>>() {
-                            }.getType());
-                            Message message = new Message();
-                            message.what = ASK_SUCCESS;
-                            message.obj = msgLists;
-                            hander.sendMessage(message);
+                        try {
+                            if (srfRefresh != null) {
+                                Gson gson = new Gson();
+                                ArrayList<Comment> msgLists = gson.fromJson(response, new TypeToken<ArrayList<Comment>>() {
+                                }.getType());
+                                Message message = new Message();
+                                message.what = ASK_SUCCESS;
+                                message.obj = msgLists;
+                                hander.sendMessage(message);
+                            }
+                        }catch (Exception e){
+                            hander.sendEmptyMessage(ASK_FAIFURE);
                         }
                     }
                 });

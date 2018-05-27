@@ -9,15 +9,12 @@
     android:layout_centerHorizontal="true"
         android:id="@+id/ll_parent"
     >
-    <ImageView
-        android:padding="4dp"
-        android:layout_width="44dp"
-        android:layout_height="44dp" />
     <RelativeLayout
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:textColor="@color/chat_detail_title"
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,6 +25,7 @@
             android:textStyle="bold"
             android:singleLine="true" />
         <TextView
+            android:textColor="@color/chat_detail_content"
             android:layout_below="@id/tv_title"
             android:ellipsize="end"
             android:id="@+id/tv_content"
@@ -42,6 +40,7 @@
             android:id="@+id/tv_time"
             android:textSize="16dp"
             android:text="2018-9-10"
+            android:textColor="@color/chat_detail_title"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     return;
                 }
                 String userName = etName.getText().toString();
-                String userPwd = etName.getText().toString();
+                String userPwd = etPwd.getText().toString();
                 uiFlusHandler.sendEmptyMessage(MyDialogHandler.SHOW_LOADING_DIALOG);
                 OkHttpUtils.post()
                         .url(API.IP_LOGIN)
@@ -83,6 +83,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
             case R.id.btn_register:
+                Intent  intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -106,17 +108,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Gson gson = new Gson();
                 user =  gson.fromJson(response,User.class);
             }
+            uiFlusHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
             if (id == 1){
-                uiFlusHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
-                if (user.getId() == 0){//如果返回用户的id 为0 ,就表示用户名和密码错误
-                    Utils.toast(getApplicationContext(),getResources().getString(R.string.login_error));
-                }else {
+                try {
+
                     //登录成功
                     Preferences.getInstance(getApplicationContext()).saveUserMsg(response);//存储用户数据
                     Utils.toast(getApplicationContext(),getResources().getString(R.string.login_success));
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
-
+                    finish();
+                }catch (Exception e){
+                    Utils.toast(getApplicationContext(),getResources().getString(R.string.request_error));
                 }
             }else {
                 Utils.toast(getApplicationContext(),getResources().getString(R.string.request_error));

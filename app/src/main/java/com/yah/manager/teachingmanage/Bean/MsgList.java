@@ -9,6 +9,13 @@ public class MsgList {
     private String title;
     private String content;
 
+
+    private String image;
+
+
+    private String username;
+
+
     public String getContent() {
         return content;
     }
@@ -17,16 +24,15 @@ public class MsgList {
         this.content = content;
     }
 
-    public String getData() {
-        return data;
+    public String getReleaseTime() {
+        return releaseTime;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setReleaseTime(String releaseTime) {
+        this.releaseTime = releaseTime;
     }
 
-    private String data;//时间
-    private String username;
+    private String releaseTime;//时间
     private int sex;
 
     public int getNewsId() {

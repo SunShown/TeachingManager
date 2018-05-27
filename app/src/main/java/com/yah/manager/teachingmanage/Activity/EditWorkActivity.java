@@ -38,7 +38,7 @@ public class EditWorkActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.tv_add_item,R.id.tb_tv_right,R.id.tb_tv_left})
+    @OnClick({R.id.tv_add_item,R.id.tb_tv_right,R.id.tb_iv_left})
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.tv_add_item:
@@ -47,7 +47,7 @@ public class EditWorkActivity extends AppCompatActivity {
             case R.id.tb_tv_right:
                 //提交作业
                 break;
-            case R.id.tb_tv_left:
+            case R.id.tb_iv_left:
                 finish();
                 break;
 

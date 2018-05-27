@@ -1,6 +1,7 @@
 package com.yah.manager.teachingmanage.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.yah.manager.teachingmanage.Activity.MsgDetailActivity;
 import com.yah.manager.teachingmanage.Bean.MsgList;
 import com.yah.manager.teachingmanage.R;
 
@@ -25,6 +27,7 @@ public class MsgListAdapter extends BaseAdapter {
     private List<MsgList> mList;
 
     public MsgListAdapter(Context mContext, List<MsgList> mList) {
+        this.mContext = mContext;
         this.inflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
         this.mList = mList;
@@ -45,8 +48,8 @@ public class MsgListAdapter extends BaseAdapter {
         return position;
     }
 
-@Override
-public View getView(int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
     ViewHolder holder;
     if (convertView == null) {
         convertView = inflater.inflate(R.layout.item_msg, null);
@@ -59,10 +62,20 @@ public View getView(int position, View convertView, ViewGroup parent) {
     } else {
         holder = (ViewHolder) convertView.getTag();
     }
+    holder.parent.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(mContext, MsgDetailActivity.class);
+            intent.putExtra("title",mList.get(position).getTitle());
+            intent.putExtra("content",mList.get(position).getContent());
+            intent.putExtra("msgId",mList.get(position).getNewsId()+"");
+            mContext.startActivity(intent);
+        }
+    });
     if (mList!= null){
         holder.title.setText(mList.get(position).getTitle());
         holder.content.setText(mList.get(position).getContent());
-        holder.time.setText(mList.get(position).getData());
+        holder.time.setText(mList.get(position).getReleaseTime());
 
     }
 

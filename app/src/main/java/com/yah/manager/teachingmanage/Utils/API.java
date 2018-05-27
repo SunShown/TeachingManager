@@ -5,14 +5,14 @@ package com.yah.manager.teachingmanage.Utils;
  */
 
 public class API {
-    private static final String IP ="http://192.168.13.1:8080/";
-    public static final String IP_LOGIN = IP + "";
+    private static final String IP ="http://192.168.31.207:8080/";
+    public static final String IP_LOGIN = IP + "User?method=login";
     public static final String IP_REGISTER = IP + "User?method=register";
     public static final String IP_MSG_LIST = IP +"News?method=getNewsList";
-    public static final String IP_COMMENT_LIST = IP +"News?method=getNewsList";
+    public static final String IP_COMMENT_LIST = IP +"News?method=getNewsDetail";
     public static final String IP_COMMIT_COMMENT = IP +"";/*提交评论*/
-    public static final String IP_GET_WORK_LIST = IP +"Work?methond=getWorkList";//获取所有题目列表
-    public static final String IP_GET_WORK_DETAIL = IP +"Work?methond=getWorkDetail";//获取某个题目的内容
+    public static final String IP_GET_WORK_LIST = IP +"Work?method=getWorkList";//获取所有题目列表
+    public static final String IP_GET_WORK_DETAIL = IP +"Work?method=getWorkDetail";//获取某个题目的内容
     public static final String IP_COMMIT_WORK = IP +"";//提交作业
     public static final String IP_COMMIT_POSTS = IP+"";//发布帖子
 

@@ -130,7 +130,7 @@ public class ChatFragment extends Fragment {
             return;
         }
         msgList.clear();//清除所有列表
-        msgLists.addAll(msgLists);//重新设置新数据
+        msgList.addAll(msgLists);//重新设置新数据
         adapter.notifyDataSetChanged();//更新UI
     }
 

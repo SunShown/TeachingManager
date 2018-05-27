@@ -3,9 +3,21 @@ package com.yah.manager.teachingmanage.Bean;
 public class Comment {
     private int comentId;
     private String userName;
-    private String content;
     private String time;
 
+    private int commentId;
+
+    private int userId;
+
+    private int newsId;
+
+    private String username;
+
+    private String replyUser;
+
+    private String comment;
+
+    private String commentTime;
     public int getComentId() {
         return comentId;
     }
@@ -23,15 +35,12 @@ public class Comment {
     }
 
     public String getContent() {
-        return content;
+        return comment;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public String getTime() {
-        return time;
+        return commentTime;
     }
 
     public void setTime(String time) {

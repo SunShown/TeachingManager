@@ -125,12 +125,17 @@ public class TestFragment extends Fragment {
                     public void onResponse(String response, int id) {
                         if (getActivity() != null && !getActivity().isFinishing()) {
                             Gson gson = new Gson();
-                            ArrayList<WorkList> msgLists = gson.fromJson(response, new TypeToken<ArrayList<WorkList>>() {
-                            }.getType());
-                            Message message = new Message();
-                            message.what = ASK_SUCCESS;
-                            message.obj = msgLists;
-                            hander.sendMessage(message);
+                            try {
+                                ArrayList<WorkList> msgLists = gson.fromJson(response, new TypeToken<ArrayList<WorkList>>() {
+                                }.getType());
+                                Message message = new Message();
+                                message.what = ASK_SUCCESS;
+                                message.obj = msgLists;
+                                hander.sendMessage(message);
+                            }catch (Exception e){
+                                hander.sendEmptyMessage(ASK_FAIFURE);
+                            }
+
                         }
                     }
                 });
@@ -200,14 +205,14 @@ public class TestFragment extends Fragment {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.title.setText(workLists.get(position).title);
+            viewHolder.title.setText(workLists.get(position).workTitle);
             viewHolder.time.setText(workLists.get(position).time);
             viewHolder.username.setText(workLists.get(position).teacherName);
             viewHolder.parent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), WorkDetailActivity.class);
-                    intent.putExtra("workId", workLists.get(position).id);
+                    intent.putExtra("workId", workLists.get(position).workId);
                     startActivity(intent);
                 }
             });
