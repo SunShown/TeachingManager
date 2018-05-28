@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.yah.manager.teachingmanage.Bean.QWork;
+import com.yah.manager.teachingmanage.Bean.User;
 import com.yah.manager.teachingmanage.Bean.WorkDetail;
 import com.yah.manager.teachingmanage.Bean.WorkItem;
 import com.yah.manager.teachingmanage.Preferences;
@@ -151,16 +153,24 @@ public class WorkDetailActivity extends AppCompatActivity {
     public void commit(){
         commitDialog.sendEmptyMessage(MyDialogHandler.SHOW_LOADING_DIALOG);
         int errorCunt = 0;
+        List<QWork> qWorks = new ArrayList<>();
+        int userId = Preferences.getInstance(getApplicationContext()).getUserMsg().id;
         for (WorkItem workItem : workItems) {
+            QWork qwork = new QWork();
+            qwork.isRight = workItem.isRight?1:0;
+            qwork.questionId = workItem.questionId;
+            qwork.select = workItem.answer;
+            qwork.userId = userId;
+            qWorks.add(qwork);
             if (!workItem.isRight){
                 errorCunt ++;
             }
         }
+        Gson gson = new Gson();
+        String workDetail = gson.toJson(qWorks);
         OkHttpUtils.post()
                 .url(API.IP_COMMIT_WORK)
-                .addParams(API.COMMIT_WORK.workId, workId+"")
-                .addParams(API.COMMIT_WORK.userId, Preferences.getInstance(getApplicationContext()).getUserMsg().id+"")
-                .addParams(API.COMMIT_WORK.errorCount,errorCunt+"")
+                .addParams(API.COMMIT_WORK.workDetail, workDetail)
                 .id(1)
                 .build()
                 .execute(new StringCallback() {
@@ -168,19 +178,22 @@ public class WorkDetailActivity extends AppCompatActivity {
                     public void onError(Call call, Exception e, int id) {
                         if (!isFinishing()) {
                             //取消刷新
-                            hander.sendEmptyMessage(COMMIT_WORK_SUCCESS);
+                            hander.sendEmptyMessage(COMMIT_WORK_FAIFURE);
                         }
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
                         if (!isFinishing()) {
-                            Gson gson = new Gson();
-                            WorkDetail workDetail = gson.fromJson(response,WorkDetail.class);
-                            Message message = new Message();
-                            message.what = COMMIT_WORK_SUCCESS;
-                            message.obj = workDetail;
-                            hander.sendMessage(message);
+                            if (response != "0"){
+                                try {
+                                    hander.sendEmptyMessage( COMMIT_WORK_SUCCESS);
+                                }catch (Exception e){
+                                    hander.sendEmptyMessage(COMMIT_WORK_FAIFURE);
+                                }
+                            }else {
+                                hander.sendEmptyMessage(COMMIT_WORK_FAIFURE);
+                            }
                         }
                     }
                 });
@@ -214,7 +227,7 @@ public class WorkDetailActivity extends AppCompatActivity {
                     break;
                 case COMMIT_WORK_SUCCESS:
                     msgDetailActivity.commitDialog.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
-                    Utils.toast(getApplicationContext(),"提价成功");
+                    Utils.toast(getApplicationContext(),"提交成功");
                     finish();//关闭页面
                     break;
             }

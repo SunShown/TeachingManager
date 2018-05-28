@@ -5,7 +5,7 @@ package com.yah.manager.teachingmanage.Utils;
  */
 
 public class API {
-    private static final String IP ="http://192.168.31.207:8080/";
+    private static final String IP ="http://192.168.1.45:8080/";
     public static final String IP_LOGIN = IP + "User?method=login";
     public static final String IP_REGISTER = IP + "User?method=register";
     public static final String IP_MSG_LIST = IP +"News?method=getNewsList";
@@ -13,7 +13,7 @@ public class API {
     public static final String IP_COMMIT_COMMENT = IP +"";/*提交评论*/
     public static final String IP_GET_WORK_LIST = IP +"Work?method=getWorkList";//获取所有题目列表
     public static final String IP_GET_WORK_DETAIL = IP +"Work?method=getWorkDetail";//获取某个题目的内容
-    public static final String IP_COMMIT_WORK = IP +"";//提交作业
+    public static final String IP_COMMIT_WORK = IP +"Work?method=commitWork";//提交作业
     public static final String IP_COMMIT_POSTS = IP+"";//发布帖子
 
     //登录接口
@@ -64,6 +64,7 @@ public class API {
     }
 
     public interface COMMIT_WORK{
+        String workDetail = "workDetail";
         String workId = "workId";
         String userId= "userId";
         String errorCount = "errorCount";
