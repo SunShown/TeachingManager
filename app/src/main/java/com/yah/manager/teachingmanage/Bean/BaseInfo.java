@@ -7,13 +7,22 @@ public class BaseInfo implements Serializable {
 
     private static final long serialVersionUID = 2074656067805712769L;
 
-    protected int weekfrom;	// 起始周
-    protected int weekto;		// 结束周
-    protected int weektype;	// 周类型：1普通；2单周；3双周
-    protected int day;			// 星期几上课
-    protected int lessonfrom;	// 开始节次
-    protected int lessonto;	// 结束节次
-    protected String place;	//地点
+    public int weekfrom;	// 起始周
+    public int weekto;		// 结束周
+    public int weektype;	// 周类型：1普通；2单周；3双周
+    public int day;			// 星期几上课
+    public int lessonfrom;	// 开始节次
+    public int lessonto;	// 结束节次
+    public String place;	//地点
+	public int userId;
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	public int getWeekfrom() {
 		return weekfrom;

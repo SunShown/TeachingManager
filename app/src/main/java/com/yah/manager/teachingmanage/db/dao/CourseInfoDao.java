@@ -38,7 +38,7 @@ public class CourseInfoDao {
 				String sql2 = "UPDATE course_info SET coursename=?,teacher=? WHERE cid=?";
 				db.execSQL(sql2, new Object[] {
 						cInfo.getCoursename(),
-						cInfo.getTeacher(),
+						cInfo.getTeacherName(),
 						cid
 				});
 				return cid;
@@ -48,7 +48,7 @@ public class CourseInfoDao {
                     "coursename,teacher,place) " +
 					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			db.execSQL(sql, new Object[] {
-					cInfo.getCid(),
+					cInfo.getCourseId(),
 					cInfo.getWeekfrom(),
 					cInfo.getWeekto(),
 					cInfo.getWeektype(),
@@ -56,7 +56,7 @@ public class CourseInfoDao {
 					cInfo.getLessonfrom(),
 					cInfo.getLessonto(),
 					cInfo.getCoursename(),
-					cInfo.getTeacher(),
+					cInfo.getTeacherName(),
                     cInfo.getPlace()
 			});
 			Cursor c1 = db.rawQuery("SELECT last_insert_rowid()", null);

@@ -20,6 +20,7 @@ import com.yah.manager.teachingmanage.Fragment.CourseFragment;
 import com.yah.manager.teachingmanage.Fragment.TestFragment;
 import com.yah.manager.teachingmanage.Preferences;
 import com.yah.manager.teachingmanage.R;
+import com.yah.manager.teachingmanage.Utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     ChatFragment chatFragment;
@@ -58,6 +59,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(intent);
                         finish();
                         break;
+                    case R.id.edit_course:
+                        if (!Preferences.getInstance(getApplicationContext()).isTeacher()){
+                            Utils.toast(getApplicationContext(),"你当前暂无权限操作");
+                            return false;
+                        }
+                        Intent intent1 = new Intent(MainActivity.this,EditCourseActivity.class);
+                        startActivity(intent1);
+                        break;
+
                 }
                 return false;
             }

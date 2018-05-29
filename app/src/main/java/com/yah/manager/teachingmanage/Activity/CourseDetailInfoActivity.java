@@ -2,7 +2,6 @@ package com.yah.manager.teachingmanage.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -11,10 +10,17 @@ import android.widget.TextView;
 
 import com.yah.manager.teachingmanage.Bean.CourseInfo;
 import com.yah.manager.teachingmanage.Bean.GlobalInfo;
+import com.yah.manager.teachingmanage.Preferences;
 import com.yah.manager.teachingmanage.R;
+import com.yah.manager.teachingmanage.Utils.API;
+import com.yah.manager.teachingmanage.Utils.MyDialogHandler;
 import com.yah.manager.teachingmanage.Utils.Utils;
 import com.yah.manager.teachingmanage.db.dao.GlobalInfoDao;
 import com.yah.manager.teachingmanage.db.dao.UserCourseDao;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import okhttp3.Call;
 
 
 /**
@@ -60,6 +66,7 @@ public class CourseDetailInfoActivity extends FragmentActivity {
     //临时变量
     private int uid,cid;
 
+    private MyDialogHandler handleDeleteCourse;
     /**
      * Activity回调函数
      */
@@ -69,7 +76,7 @@ public class CourseDetailInfoActivity extends FragmentActivity {
         // 继承父类方法，绑定View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-
+        handleDeleteCourse = new MyDialogHandler(this,"正在请求...");
         // 初始化context
         context = getApplicationContext();
 
@@ -85,7 +92,7 @@ public class CourseDetailInfoActivity extends FragmentActivity {
         uid = gInfo.getActiveUserUid();
         cInfo = new CourseInfo();
         cInfo = (CourseInfo) getIntent().getSerializableExtra("courseInfo");//从Intent中取回Serializable的course_info内容
-        cid = cInfo.getCid();
+        cid = cInfo.getCourseId();
 
         // 初始化临时变量
 
@@ -124,7 +131,7 @@ public class CourseDetailInfoActivity extends FragmentActivity {
         courseSpaceView = (TextView) findViewById(R.id.Detail_Course_Space);
 
         courseNameView.setText("课程名：" + cInfo.getCoursename());
-        courseTeacherView.setText("任课教师：" + cInfo.getTeacher());
+        courseTeacherView.setText("任课教师：" + cInfo.getTeacherName());
         courseTimeView.setText("时间：星期" + Utils.getDayStr(cInfo.getDay()) + " 第" + cInfo.getLessonfrom() + "节 - 第" + cInfo.getLessonto() + "节");
         if(cInfo.getWeektype()==1) {
             courseWeekView.setText("周数：第" +  cInfo.getWeekfrom() + "周 - 第" + cInfo.getWeekto() + "周");
@@ -136,6 +143,11 @@ public class CourseDetailInfoActivity extends FragmentActivity {
         courseSpaceView.setText("地点：" + cInfo.getPlace());
 
         deleteButton = (Button) findViewById(R.id.Btn_Delete);
+        if (!Preferences.getInstance(getApplicationContext()).isTeacher()){
+            deleteButton.setVisibility(View.GONE);
+        }else {
+            deleteButton.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initListener() {
@@ -147,7 +159,7 @@ public class CourseDetailInfoActivity extends FragmentActivity {
 
         deleteButton.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v) {
-                deleteCourse();
+                delete();
             }
         });
 
@@ -155,21 +167,39 @@ public class CourseDetailInfoActivity extends FragmentActivity {
 
 
     private void deleteCourse(){
-        // 显示状态对话框
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage(getResources().getString(R.string.loading_tip));
-        progressDialog.setCancelable(true);
-        progressDialog.show();
-
-        handleDeleteCourse(uid, cid);
+//        // 显示状态对话框
+//        progressDialog = new ProgressDialog(this);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage(getResources().getString(R.string.loading_tip));
+//        progressDialog.setCancelable(true);
+//        progressDialog.show();
+//
+//        handleDeleteCourse(uid, cid);
     }
 
-    /**
-     * 删除课程子线程,删除uc表项，选项2为删除课程
-     */
-    private void handleDeleteCourse(int uid,int cid) {
+    public void delete(){
+        handleDeleteCourse.sendEmptyMessage(MyDialogHandler.SHOW_LOADING_DIALOG);
+        OkHttpUtils.post().url(API.IP_DELETE_COURSE)
+                .addParams(API.DELETE_COURSE.courseId,cid+"")
+                .id(1)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        handleDeleteCourse.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
+                    }
 
+                    @Override
+                    public void onResponse(String response, int id) {
+                        handleDeleteCourse.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
+                        if ("success".equals(response)){
+                            Utils.toast(getApplicationContext(),"删除成功，请刷新");
+                            finish();
+                        }else {
+                            Utils.toast(getApplicationContext(),"删除失败");
+                        }
+                    }
+                });
     }
 
 

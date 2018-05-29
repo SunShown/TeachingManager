@@ -15,12 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MainActivity" android:launchMode="singleTask">
-
-        </activity>
-        <activity android:name=".Activity.LoginActivity"
-            android:launchMode="singleTop"
-            >
+        <activity
+            android:name=".Activity.MainActivity"
+            android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,8 @@
         <activity android:name=".Activity.MsgDetailActivity" />
         <activity android:name=".Activity.WorkDetailActivity" />
         <activity android:name=".Activity.TradeCircleActivity" />
-        <activity android:name=".Activity.EditWorkActivity"></activity>
+        <activity android:name=".Activity.EditWorkActivity" />
+        <activity android:name=".Activity.EditCourseActivity"></activity>
     </application>
 
 </manifest>

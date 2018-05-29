@@ -66,7 +66,7 @@ public class UserCourseDao {
 			
 			while (c.moveToNext()) {
 				CourseInfo cInfo = new CourseInfo();
-				cInfo.setCid(c.getInt(c.getColumnIndex("cid")));
+				cInfo.setCourseId(c.getInt(c.getColumnIndex("cid")));
 				cInfo.setWeekfrom(c.getInt(c.getColumnIndex("weekfrom")));
 				cInfo.setWeekto(c.getInt(c.getColumnIndex("weekto")));
 				cInfo.setWeektype(c.getInt(c.getColumnIndex("weektype")));
@@ -74,7 +74,7 @@ public class UserCourseDao {
 				cInfo.setLessonfrom(c.getInt(c.getColumnIndex("lessonfrom")));
 				cInfo.setLessonto(c.getInt(c.getColumnIndex("lessonto")));
 				cInfo.setCoursename(c.getString(c.getColumnIndex("coursename")));
-				cInfo.setTeacher(c.getString(c.getColumnIndex("teacher")));
+				cInfo.setTeacherName(c.getString(c.getColumnIndex("teacher")));
 				cInfo.setPlace(c.getString(c.getColumnIndex("place")));
 				cInfos.add(cInfo);
 			}

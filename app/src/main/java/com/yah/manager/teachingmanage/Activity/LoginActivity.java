@@ -88,25 +88,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (uiFlusHandler == null){
                 return;
             }
-            User user = new User();
-            if(!TextUtils.isEmpty(response)){
-                try{
+            uiFlusHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
+            if (id == 1){
+                try {
                     Gson gson = new Gson();
-                    user =  gson.fromJson(response,User.class);
+                    User user =  gson.fromJson(response,User.class);
                     if (user.type == 0){
                         //学生
                         Preferences.getInstance(getApplicationContext()).setTeacher(false);
                     }else {
                         Preferences.getInstance(getApplicationContext()).setTeacher(true);
                     }
-                }catch (Exception e){
-
-                }
-            }
-            uiFlusHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
-            if (id == 1){
-                try {
-
                     //登录成功
                     Preferences.getInstance(getApplicationContext()).saveUserMsg(response);//存储用户数据
                     Utils.toast(getApplicationContext(),getResources().getString(R.string.login_success));

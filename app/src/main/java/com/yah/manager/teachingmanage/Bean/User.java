@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 
 public class User implements Serializable {
-    public int userId;
+    public int userId = 1;
     public String username;
     public String userPwd;
     public int type;//0代表学生 1代表老师

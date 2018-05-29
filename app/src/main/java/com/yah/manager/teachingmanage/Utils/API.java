@@ -5,7 +5,7 @@ package com.yah.manager.teachingmanage.Utils;
  */
 
 public class API {
-    private static final String IP ="http://192.168.31.207:8080/";
+    private static final String IP ="http://192.168.1.45:8080/";
     public static final String IP_LOGIN = IP + "User?method=login";
     public static final String IP_REGISTER = IP + "User?method=register";
     public static final String IP_MSG_LIST = IP +"News?method=getNewsList";
@@ -16,7 +16,9 @@ public class API {
     public static final String IP_COMMIT_WORK = IP +"Work?method=commitWork";//提交作业
     public static final String IP_COMMIT_POSTS = IP+"News?method=releaseNews";//发布帖子
     public static final String IP_RELEASE_WORK = IP+"Work?method=releaseWork";//布置作业
-
+    public static final String IP_COMMIT_COURSE = IP+"Work?method=commitCourse";//添加课表
+    public static final String IP_GET_COURSE = IP+"Work?method=getCourse";//获取课表
+    public static final String IP_DELETE_COURSE = IP+"Work?method=deleteCourse";//删除课表
 
     //登录接口
     public interface LOGIN{
@@ -86,5 +88,13 @@ public class API {
      */
     public interface RELEASE_WORK{
         String content = "content";
+    }
+
+    public interface GET_COURSE{
+        String week = "week";
+    }
+
+    public interface DELETE_COURSE{
+        String courseId = "courseId";
     }
 }
