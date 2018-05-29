@@ -144,18 +144,25 @@ public class CourseFragment extends Fragment {
     private MyDialogHandler dialogHandler;
     private MyHander hander;
     private int uid;
-
+    private View rootView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_course, null);
-        context = getActivity().getApplicationContext();
-        unbinder = ButterKnife.bind(this, view);
-        initView();
-        initTable();
-        getCourseFromServe();
-        initListener();
-        return view;
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_course, null);
+            context = getActivity().getApplicationContext();
+            unbinder = ButterKnife.bind(this, rootView);
+            initView();
+            initTable();
+            getCourseFromServe();
+            initListener();
+        }else {
+            ViewGroup parent = (ViewGroup) rootView.getParent();
+            if (parent != null) {
+                parent.removeView(rootView);
+            }
+        }
+        return rootView;
     }
 
     /**
@@ -193,7 +200,7 @@ public class CourseFragment extends Fragment {
         weekTextView.setCompoundDrawables(null, null, down, null);
         weekTextView.setCompoundDrawablePadding(2);
         //计算并显示上周数
-        weekTextView.setText("第" + Utils.getWeeks(gInfo.getTermBegin()) + "周(本周)");
+        weekTextView.setText("第" + Utils.getWeeks(gInfo.getTermBegin()) + "周");
         tempWeek = Utils.getWeeks(gInfo.getTermBegin());
     }
 
@@ -267,6 +274,16 @@ public class CourseFragment extends Fragment {
 
     //从服务器端获取课表，此处demo为简单起见设置了两个例子展示一下效果
     private void refreshDate(List<CourseInfo> courseInfos) {
+        try {
+            for(TextView tx : courseTextViewList)
+            {
+                testCourseRl.removeView(tx);
+            }
+            courseTextViewList.clear();
+
+        }catch (Exception e){
+
+        }
         if (courseInfos == null || courseInfos.size() == 0) {
             Utils.toast(getActivity().getApplicationContext(), "暂无数据");
             return;
@@ -485,17 +502,25 @@ public class CourseFragment extends Fragment {
                                         int arg2, long arg3) {
                     int index = 0;
                     String indexStr = weekTextView.getText().toString();
-                    indexStr = indexStr.replace("第", "").replace("周(本周)", "");
-                    indexStr = indexStr.replace("周(非本周)", "");
+                    indexStr = indexStr.replace("第", "").replace("周", "");
+                    indexStr = indexStr.replace("周", "");
                     if (!indexStr.equals("全部"))//没啥用
                         index = Integer.parseInt(indexStr);
                     tempWeek = arg2 +1;
                     if (currWeek == (arg2 + 1)) {
-                        weekTextView.setText("第" + (arg2 + 1) + "周(本周)");
+                        weekTextView.setText("第" + (arg2 + 1) + "周");
                     } else {
-                        weekTextView.setText("第" + (arg2 + 1) + "周(非本周)");
+                        weekTextView.setText("第" + (arg2 + 1) + "周");
                     }
                     weekListWindow.dismiss();
+                    if((arg2 + 1) != index)
+                    {
+                        cw = arg2+1;
+                        Log.v("courseActivity", "cw值改变："+ cw);
+                        Log.v("courseActivity", "清空当前课程信息");
+
+
+                    }
                     getCourseFromServe();
                 }
             });
@@ -522,7 +547,6 @@ public class CourseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     public void getCourseFromServe() {

@@ -21,6 +21,8 @@ import com.yah.manager.teachingmanage.Utils.Utils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.w3c.dom.Text;
+
 import okhttp3.Call;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -89,10 +91,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 return;
             }
             uiFlusHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
+            if (TextUtils.isEmpty(response) || response.equals("{'info':'error'}")){
+                Utils.toast(getApplicationContext(),"请查看用户名和密码是否正确");
+                return;
+            }
             if (id == 1){
                 try {
                     Gson gson = new Gson();
                     User user =  gson.fromJson(response,User.class);
+
                     if (user.type == 0){
                         //学生
                         Preferences.getInstance(getApplicationContext()).setTeacher(false);

@@ -95,18 +95,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void changeTab(int btnId){
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
+        transaction.addToBackStack(null);
         switch (btnId){
             case R.id.ll_course://
-                transaction.replace(R.id.content,courseFragment);
+                transaction.replace(R.id.content,courseFragment,"course");
                 break;
             case R.id.ll_test:
-                transaction.replace(R.id.content,testFragment);
+                transaction.replace(R.id.content,testFragment,"测试");
                 break;
             case R.id.ll_chat:
-                transaction.replace(R.id.content,chatFragment);
+                transaction.replace(R.id.content,chatFragment,"chat");
                 break;
         }
-        transaction.commit();
+
+        transaction.commitAllowingStateLoss();
     }
     public void changeColor(int btnId){
         if (btnId == R.id.ll_course){

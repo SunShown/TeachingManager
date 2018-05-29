@@ -133,13 +133,7 @@ public class CourseDetailInfoActivity extends FragmentActivity {
         courseNameView.setText("课程名：" + cInfo.getCoursename());
         courseTeacherView.setText("任课教师：" + cInfo.getTeacherName());
         courseTimeView.setText("时间：星期" + Utils.getDayStr(cInfo.getDay()) + " 第" + cInfo.getLessonfrom() + "节 - 第" + cInfo.getLessonto() + "节");
-        if(cInfo.getWeektype()==1) {
-            courseWeekView.setText("周数：第" +  cInfo.getWeekfrom() + "周 - 第" + cInfo.getWeekto() + "周");
-        }else if(cInfo.getWeektype()==2) {
-            courseWeekView.setText("周数：第" +  cInfo.getWeekfrom() + "节 - 第" + cInfo.getWeekto()+ "周 单周");
-        }else if(cInfo.getWeektype()==3) {
-            courseWeekView.setText("周数：第" +  cInfo.getWeekfrom() + "节 - 第" + cInfo.getWeekto()+ "周 双周");
-        }
+        courseWeekView.setText("周数：第" +  cInfo.getWeekfrom() + "周 - 第" + cInfo.getWeekto() + "周");
         courseSpaceView.setText("地点：" + cInfo.getPlace());
 
         deleteButton = (Button) findViewById(R.id.Btn_Delete);

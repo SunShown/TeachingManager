@@ -94,6 +94,9 @@ public class TestFragment extends Fragment {
     }
 
     public void refreshSuccess(ArrayList<WorkList> workListsServe) {
+        if (srfRefresh== null ){
+            return;
+        }
         srfRefresh.setRefreshing(false);
         if (workListsServe == null || workListsServe.size() == 0) {
             Utils.toast(getActivity().getApplicationContext(), "暂无数据");
