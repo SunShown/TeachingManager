@@ -5,13 +5,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.google.gson.Gson;
+import com.yah.manager.teachingmanage.Bean.User;
+import com.yah.manager.teachingmanage.Preferences;
 import com.yah.manager.teachingmanage.R;
 import com.yah.manager.teachingmanage.Utils.API;
+import com.yah.manager.teachingmanage.Utils.MyDialogHandler;
 import com.yah.manager.teachingmanage.Utils.Utils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -37,12 +42,13 @@ public class RegisterActivity extends AppCompatActivity {
     RadioGroup radioStatus;
     @BindView(R.id.reg_btn_register)
     Button regBtnRegister;
-
+    MyDialogHandler dialogHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+        dialogHandler = new MyDialogHandler(RegisterActivity.this,"正在注册...");
     }
 
     /**
@@ -67,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
             type = 1;//如果为老师，则状态改为1；
         }
         Log.e("register", "register:"+API.IP_REGISTER);
+        dialogHandler.sendEmptyMessage(MyDialogHandler.SHOW_LOADING_DIALOG);
         OkHttpUtils.post().url(API.IP_REGISTER)
                 .id(1)
                 .addParams(API.REGISTER.username, userName.trim())
@@ -76,24 +83,50 @@ public class RegisterActivity extends AppCompatActivity {
                 .execute(new MyStringCallback());
     }
 
-    @OnClick(R.id.reg_btn_register)
-    public void onViewClicked() {
-        register();
+    @OnClick({R.id.reg_btn_register,R.id.tb_iv_left})
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.reg_btn_register:
+                register();
+                break;
+            case R.id.tb_iv_left:
+                finish();
+                break;
+        }
+
     }
 
     public class MyStringCallback extends StringCallback {
 
         @Override
         public void onError(Call call, Exception e, int id) {
-
+            dialogHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
+            Utils.toast(RegisterActivity.this, "请求失败");
         }
 
         @Override
         public void onResponse(String response, int id) {
+            dialogHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
             if (id == 1) {
-                Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
+                Gson gson = new Gson();
+                try {
+                    User user = gson.fromJson(response, User.class);
+                    if (user.type == 0){
+                        //学生
+                        Preferences.getInstance(getApplicationContext()).setTeacher(false);
+                    }else {
+                        Preferences.getInstance(getApplicationContext()).setTeacher(true);
+                    }
+                    Utils.toast(getApplicationContext(),"注册成功");
+                    Preferences.getInstance(getApplicationContext()).saveUserMsg(response);
+                    Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }catch (Exception e){
+                    Utils.toast(getApplicationContext(),response);
+                }
+
+
             } else {
                 Utils.toast(RegisterActivity.this, "请求失败");
             }

@@ -64,30 +64,6 @@
         </LinearLayout>
 
     </LinearLayout>
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:id="@+id/rb_student"
-            android:checked="true"
-            android:textColor="@color/text_normal"
-            android:layout_marginRight="10dp"
-            android:textSize="@dimen/main_text_size"
-            android:text="@string/login_student"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp" />
-        <RadioButton
-            android:id="@+id/rb_teacher"
-            android:textColor="@color/text_normal"
-            android:textSize="@dimen/main_text_size"
-            android:text="@string/login_teacher"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp" />
-    </RadioGroup>
     <LinearLayout
         android:layout_marginTop="70dp"
         android:layout_gravity="center"

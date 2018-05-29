@@ -47,11 +47,13 @@ public class TradeCircleActivity extends AppCompatActivity {
     @BindView(R.id.tb_iv_left)
     ImageView ivBack;
     private MyDialogHandler dialogHandler;
+    private MyHander hander;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_circle);
         ButterKnife.bind(this);
+        hander = new MyHander(this);
         dialogHandler = new MyDialogHandler(this,"正在提交......");
     }
 
@@ -84,26 +86,54 @@ public class TradeCircleActivity extends AppCompatActivity {
                 .url(API.IP_COMMIT_POSTS)
                 .addParams(API.SEND_CIRCLE.title,etTitle.getText().toString())
                 .addParams(API.SEND_CIRCLE.content,etContent.getText().toString())
-                .addParams(API.SEND_CIRCLE.userId, Preferences.getInstance(getApplicationContext()).getUserMsg().id+"")
+                .addParams(API.SEND_CIRCLE.userId, Preferences.getInstance(getApplicationContext()).getUserMsg().getId()+"")
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         if (!isFinishing()){
-                            dialogHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
-                            Utils.toast(getApplicationContext(),"提交失败，请重试");
+                            hander.sendEmptyMessage(ASK_FAIFURE);
                         }
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
                         if (!isFinishing()){
-                            dialogHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
-                            Utils.toast(getApplicationContext(),"提交成功");
-                            finish();
+                            if (response !=null && response.endsWith("success")){
+                                hander.sendEmptyMessage(ASK_SUCCESS);
+                            }else {
+                                hander.sendEmptyMessage(ASK_FAIFURE);
+                            }
+                        }else {
+                            hander.sendEmptyMessage(ASK_FAIFURE);
                         }
                     }
                 });
     }
+    class MyHander extends Handler {
+        WeakReference<TradeCircleActivity> msgDetailActivities;
 
+        public MyHander(TradeCircleActivity chatFragments) {
+            this.msgDetailActivities = new WeakReference<>(chatFragments);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            TradeCircleActivity msgDetailActivity = msgDetailActivities.get();
+            switch (msg.what) {
+                case ASK_FAIFURE:
+                    //请求失败
+                    msgDetailActivity.dialogHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
+                    Utils.toast(getApplicationContext(), "请求失败，请重试");
+                    break;
+                case ASK_SUCCESS:
+                    //请求成功
+                    msgDetailActivity.dialogHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
+                    Utils.toast(getApplicationContext(),"发表成功");
+                    finish();
+                    break;
+            }
+        }
+    }
 }

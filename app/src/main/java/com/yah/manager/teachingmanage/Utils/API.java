@@ -5,16 +5,18 @@ package com.yah.manager.teachingmanage.Utils;
  */
 
 public class API {
-    private static final String IP ="http://192.168.1.45:8080/";
+    private static final String IP ="http://192.168.31.207:8080/";
     public static final String IP_LOGIN = IP + "User?method=login";
     public static final String IP_REGISTER = IP + "User?method=register";
     public static final String IP_MSG_LIST = IP +"News?method=getNewsList";
     public static final String IP_COMMENT_LIST = IP +"News?method=getNewsDetail";
-    public static final String IP_COMMIT_COMMENT = IP +"";/*提交评论*/
+    public static final String IP_COMMIT_COMMENT = IP +"Comment?method=addNewComment";/*提交评论*/
     public static final String IP_GET_WORK_LIST = IP +"Work?method=getWorkList";//获取所有题目列表
     public static final String IP_GET_WORK_DETAIL = IP +"Work?method=getWorkDetail";//获取某个题目的内容
     public static final String IP_COMMIT_WORK = IP +"Work?method=commitWork";//提交作业
-    public static final String IP_COMMIT_POSTS = IP+"";//发布帖子
+    public static final String IP_COMMIT_POSTS = IP+"News?method=releaseNews";//发布帖子
+    public static final String IP_RELEASE_WORK = IP+"Work?method=releaseWork";//布置作业
+
 
     //登录接口
     public interface LOGIN{
@@ -46,8 +48,8 @@ public class API {
      * 提交评论
      */
     public interface COMMIT_COMMENT{
-        String msgId = "msgId";
-        String content = "content";
+        String msgId = "newsId";
+        String content = "comment";
         String userId = "userId";
     }
 
@@ -77,5 +79,12 @@ public class API {
         String title = "title";
         String content = "content";
         String userId = "userId";
+    }
+
+    /**
+     * 发布作业
+     */
+    public interface RELEASE_WORK{
+        String content = "content";
     }
 }

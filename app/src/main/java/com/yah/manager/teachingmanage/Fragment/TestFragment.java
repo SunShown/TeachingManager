@@ -110,7 +110,7 @@ public class TestFragment extends Fragment {
         OkHttpUtils.get()
                 .url(API.IP_GET_WORK_LIST)
                 .id(1)
-                .addParams(API.GET_TEST_LIST.userId, Preferences.getInstance(getActivity().getApplicationContext()).getUserMsg().id + "")
+                .addParams(API.GET_TEST_LIST.userId, Preferences.getInstance(getActivity().getApplicationContext()).getUserMsg().getId() + "")
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -207,7 +207,7 @@ public class TestFragment extends Fragment {
             }
             viewHolder.title.setText(workLists.get(position).workTitle);
             viewHolder.time.setText(workLists.get(position).time);
-            viewHolder.username.setText(workLists.get(position).teacherName);
+            viewHolder.username.setText(workLists.get(position).user.username);
             viewHolder.parent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

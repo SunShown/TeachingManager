@@ -114,7 +114,7 @@ public class WorkDetailActivity extends AppCompatActivity {
         OkHttpUtils.post()
                 .url(API.IP_GET_WORK_DETAIL)
                 .addParams(API.GET_WORK_DETAIL.workId, workId+"")
-                .addParams(API.GET_WORK_DETAIL.userId, Preferences.getInstance(getApplicationContext()).getUserMsg().id+"")
+                .addParams(API.GET_WORK_DETAIL.userId, Preferences.getInstance(getApplicationContext()).getUserMsg().getId()+"")
                 .id(1)
                 .build()
                 .execute(new StringCallback() {
@@ -154,7 +154,7 @@ public class WorkDetailActivity extends AppCompatActivity {
         commitDialog.sendEmptyMessage(MyDialogHandler.SHOW_LOADING_DIALOG);
         int errorCunt = 0;
         List<QWork> qWorks = new ArrayList<>();
-        int userId = Preferences.getInstance(getApplicationContext()).getUserMsg().id;
+        int userId = Preferences.getInstance(getApplicationContext()).getUserMsg().getId();
         for (WorkItem workItem : workItems) {
             QWork qwork = new QWork();
             qwork.isRight = workItem.isRight?1:0;

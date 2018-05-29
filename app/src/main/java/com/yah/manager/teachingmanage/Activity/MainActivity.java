@@ -1,9 +1,15 @@
 package com.yah.manager.teachingmanage.Activity;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +18,7 @@ import android.widget.TextView;
 import com.yah.manager.teachingmanage.Fragment.ChatFragment;
 import com.yah.manager.teachingmanage.Fragment.CourseFragment;
 import com.yah.manager.teachingmanage.Fragment.TestFragment;
+import com.yah.manager.teachingmanage.Preferences;
 import com.yah.manager.teachingmanage.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -20,7 +27,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TestFragment testFragment;
     LinearLayout llCourse,llTest,llChat;
     ImageView ivCourse,ivTest,ivChat;
-    TextView tvCourse,tvText,tvChat;
+    TextView tvCourse,tvUserName,tvUserState,tvText,tvChat;
+    Preferences preferences;
+    NavigationView nav_view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void initView(){
+        preferences = Preferences.getInstance(getApplicationContext());
         llCourse = findViewById(R.id.ll_course);
         llTest = findViewById(R.id.ll_test);
         llChat = findViewById(R.id.ll_chat);
@@ -38,6 +48,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvCourse = findViewById(R.id.tv_course);
         tvText = findViewById(R.id.tv_test);
         tvChat = findViewById(R.id.tv_chat);
+        nav_view = findViewById(R.id.nav_view);
+        nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_manage:
+                        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
+                return false;
+            }
+        });
+        View view = nav_view.inflateHeaderView(R.layout.nav_header_main);
+        tvUserName = view.findViewById(R.id.userName);
+        tvUserState = view.findViewById(R.id.userState);
+        tvUserName.setText(preferences.getUserMsg().username);
+        tvUserState.setText(preferences.getUserMsg().type == 0?"身份：学生":"身份：老师");
 //        llCourse.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -111,5 +140,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_manage:
+                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

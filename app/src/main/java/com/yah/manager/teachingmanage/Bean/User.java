@@ -7,17 +7,17 @@ import java.io.Serializable;
  */
 
 public class User implements Serializable {
-    public int id;
-    public String userName;
+    public int userId;
+    public String username;
     public String userPwd;
     public int type;//0代表学生 1代表老师
 
     public int getId() {
-        return id;
+        return userId;
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public String getUserPwd() {

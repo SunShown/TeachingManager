@@ -26,8 +26,6 @@ import okhttp3.Call;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     EditText etName,etPwd;
     Button btnLogin,btnRegister;
-    RadioButton rBstudent,rBTeacher;
-    RadioGroup radioGroup;
     private int type ;//判断当前是学生还是老师
     private MyDialogHandler uiFlusHandler;
     @Override
@@ -42,24 +40,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         etPwd = findViewById(R.id.et_password);
         btnLogin = findViewById(R.id.btn_login);
         btnRegister = findViewById(R.id.btn_register);
-        rBstudent = findViewById(R.id.rb_student);
-        rBTeacher = findViewById(R.id.rb_teacher);
-        radioGroup =findViewById(R.id.radioGroup);
         uiFlusHandler = new MyDialogHandler(this,"登录中...");
     }
     private void initListener(){
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i == R.id.rb_student){
-                    type = 0;//学生
-                }else {
-                    type =1;//老师
-                }
-            }
-        });
     }
     @Override
     public void onClick(View view) {
@@ -105,8 +90,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             User user = new User();
             if(!TextUtils.isEmpty(response)){
-                Gson gson = new Gson();
-                user =  gson.fromJson(response,User.class);
+                try{
+                    Gson gson = new Gson();
+                    user =  gson.fromJson(response,User.class);
+                    if (user.type == 0){
+                        //学生
+                        Preferences.getInstance(getApplicationContext()).setTeacher(false);
+                    }else {
+                        Preferences.getInstance(getApplicationContext()).setTeacher(true);
+                    }
+                }catch (Exception e){
+
+                }
             }
             uiFlusHandler.sendEmptyMessage(MyDialogHandler.DISMISS_LOADING_DIALOG);
             if (id == 1){

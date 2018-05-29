@@ -4,6 +4,6 @@ public class WorkList {
     public int workId;
     public String  workTitle ;
     public String time;
-    public int user;
+    public User user;
     public String teacherName;
 }
